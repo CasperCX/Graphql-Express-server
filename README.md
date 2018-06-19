@@ -1,2 +1,2 @@
 # Graphql-Express-server
-Trying out a Graphql
+Trying out Graphql
