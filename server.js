@@ -2,7 +2,8 @@ const express = require("express");
 const express_graphql = require("express-graphql");
 const { buildSchema } = require("graphql");
 const config = require("./config/config");
-const db = require("./db");
+const { getCourse, getCourses, updateCourseTopic } = require('./resolvers');
+
 const app = express();
 
 //GraphQL schema
@@ -25,40 +26,6 @@ const schema = buildSchema(`
 `);
 
 
-const getCourse = (args) => {
-    let id = args.id;
-    return db.filter(course => {
-        return course.id == id;
-    })[0]
-};
-
-const getCourses = (args) => {
-    if (args.topic) {
-        let topic = args.topic;
-        return db.filter(course => {
-            return course.topic === topic
-        })
-    } else {
-        return db;
-    }
-};
-
-const updateCourseTopic = ({id, topic}) => {
-    if (id && topic) {
-        db.map(course => {
-            if (course.id === id) {
-                course.topic = topic;
-                return course;
-            }
-        });
-    } else {
-        return db;
-    }
-    return db.filter(course => {
-        return course.id == id;
-    })[0];
-};
-
 //Root resolver
 const root = {
     course: getCourse,
@@ -66,7 +33,6 @@ const root = {
     updateCourseTopic: updateCourseTopic
 
 };
-
 
 app.use('/graphql', express_graphql({
     schema: schema,
@@ -77,3 +43,18 @@ app.use('/graphql', express_graphql({
 app.listen(config.PORT, () => {
     console.log(`Graphql server is running on port: ${config.PORT}`);
 });
+
+
+//MUTATION EXAMPLE
+// mutation updateCourseTopic($id: Int!, $topic: String!) {
+//     updateCourseTopic(id:$id, topic: $topic) {
+//       ...courseFields
+//     }
+//   }
+//   fragment courseFields on Course {
+//     title
+//     author
+//       description
+//     url
+//     topic
+//   }
