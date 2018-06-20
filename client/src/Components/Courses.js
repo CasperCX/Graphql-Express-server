@@ -1,17 +1,9 @@
 import React from 'react';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { ALL_COURSES } from '../Queries/courseQueries';
 
 const Courses = () => (
-    <Query query={gql`
-    {
-        allCourses {
-            id
-            title
-            author
-            }
-        }
-    `}>
+    <Query query={ALL_COURSES}>
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :(</p>;
