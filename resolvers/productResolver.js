@@ -9,7 +9,13 @@ const resolvers = {
             return db.filter(course => {
                 return course.id === id;
             })[0]
-        }
+        },
+        courseImage: (root, {id}) => {
+            console.log("recieved:", id);
+            return db.filter(course => {
+                return course.id === id;
+            })[0]
+       }
     }
 };
 

@@ -13,6 +13,7 @@ const typeDefs = [`
     type Query {
         allCourses: [Course]
         course(id: Int!): Course
+        courseImage(id: Int!): Course
     }
 `];
 

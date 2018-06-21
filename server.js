@@ -1,5 +1,5 @@
 const express = require("express");
-var cors = require('cors');
+const cors = require('cors');
 // const express_graphql = require("express-graphql");
 // const { buildSchema } = require("graphql");
 const config = require("./config/config");
