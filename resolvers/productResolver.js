@@ -1,5 +1,8 @@
+//FAKE LIVE DB
 const db = require("../db");
 
+//TODO
+//Here resolve query with: Knex, Sequelize on SQL DB , or Mongoose for mongoDB
 const resolvers = {
     Query: {
         allCourses: () => {
@@ -11,7 +14,6 @@ const resolvers = {
             })[0]
         },
         courseImage: (root, {id}) => {
-            console.log("recieved:", id);
             return db.filter(course => {
                 return course.id === id;
             })[0]

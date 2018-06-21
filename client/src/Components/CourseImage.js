@@ -10,8 +10,8 @@ class CourseImage extends Component{
                 console.log("loading", this.props.data);
                 return <div>Loading....</div>
             } else {
-                console.log(this.props.data);
-                return <p></p>
+                console.log(this.props.data.course.url);
+                return <a href={this.props.data.course.url}>{this.props.data.course.url}</a>
             
             }    
         }
@@ -21,7 +21,3 @@ class CourseImage extends Component{
 export default graphql(GET_IMAGE, {
     options: (props) => ({variables: {id: 1} }) })(CourseImage);
 
-        
-// export default graphql(QueryTodos, {
-//     options: (props) => ({ variables: { userId: props.userId } })
-//   })( Home );
