@@ -14,7 +14,7 @@ const Courses = () => (
                     if (error) return <p>Error :(</p>;
 
                     return data.allCourses.map((course) => (
-                        <Course course={course} />
+                        <Course key={course.id} course={course} />
                     ));
                     }}
                 </Query>
