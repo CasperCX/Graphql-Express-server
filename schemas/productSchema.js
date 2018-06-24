@@ -15,6 +15,9 @@ const typeDefs = [`
         course(id: Int!): Course
         courseImage(id: Int!): Course
     }
+    type Mutation {
+        createCourse (title: String!, author: String!): Course
+      }
 `];
 
 const schema = makeExecutableSchema({

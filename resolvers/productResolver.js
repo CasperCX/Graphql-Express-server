@@ -1,26 +1,33 @@
+
 //FAKE LIVE DB
 const db = require("../db");
 const path = require("path");
-const Promise = require('bluebird');
+// const Promise = require('bluebird');
 //LOCAL DB 
-const sqlite = require('sqlite');
+// const sqlite = require('sqlite');
 const sqlite3 = require('sqlite3').verbose();
 const db_path = path.resolve(__dirname, "courses.db");
 
-const dbPromise = sqlite.open(db_path, { Promise });
+// const dbPromise = sqlite.open(db_path, { Promise });
 //TODO
 //Here resolve query with: Knex, Sequelize on SQL DB , or Mongoose for mongoDB
 const resolvers = {
     Query: {
         allCourses: () => {
-            console.log(typeof db, db);
             return db;
+            // let db3 = new sqlite3.Database(db_path);
+            
+            // db3.all("SELECT * FROM Courses", (err, rows) => {
+            //     if(err) {
+            //         console.log(err);
+            //     } else {
+            //         return rows;
+            //     }
+            // });
+          
+            // db3.close();
         },
-        // course: (root, {id}) => {
-        //     return db.filter(course => {
-        //         return course.id === id;
-        //     })[0]
-        //     },
+  
         async course(root, {id}) {
             const db3 = await dbPromise;
             let results = [];
@@ -51,6 +58,20 @@ const resolvers = {
                 return course.id === id;
             })[0]
        }
+    },
+    Mutation: {
+        async createCourse(root, {title, author}) {
+            let db3 = new sqlite3.Database(db_path);
+                try {
+                    // const createcourse = await db3.run(`INSERT INTO Courses VALUES(NULL, ${title}, ${author}, ?, ?, ?`);
+                    const createcourse = db3.prepare(`INSERT into Courses VALUES(?, ?, ?, ?, ?, ?);`);
+                    createcourse.run(null, title, author, "test", "test", "test");
+                    return createcourse;
+                } catch(err) {
+                    console.log(err);
+                }
+            db3.close();
+        }
     }
 };
 
