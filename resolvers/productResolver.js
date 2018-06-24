@@ -1,76 +1,55 @@
-
-//FAKE LIVE DB
-const db = require("../db");
 const path = require("path");
-// const Promise = require('bluebird');
-//LOCAL DB 
-// const sqlite = require('sqlite');
-const sqlite3 = require('sqlite3').verbose();
-const db_path = path.resolve(__dirname, "courses.db");
+const db_path = path.resolve(__dirname, "../db/courses.sqlite");
 
-// const dbPromise = sqlite.open(db_path, { Promise });
-//TODO
-//Here resolve query with: Knex, Sequelize on SQL DB , or Mongoose for mongoDB
+var Knex = require('knex')({
+    client: 'sqlite3',
+    connection: {
+      filename: db_path
+    },
+    useNullAsDefault: true
+  });
+
+
 const resolvers = {
     Query: {
-        allCourses: () => {
-            return db;
-            // let db3 = new sqlite3.Database(db_path);
-            
-            // db3.all("SELECT * FROM Courses", (err, rows) => {
-            //     if(err) {
-            //         console.log(err);
-            //     } else {
-            //         return rows;
-            //     }
-            // });
-          
-            // db3.close();
+        async allCourses () {
+            try {
+                const courses = await Knex('Courses');
+                return courses   
+            } catch(err) {
+                console.log(err);
+            }
         },
   
-        async course(root, {id}) {
-            const db3 = await dbPromise;
-            let results = [];
-            // let db2 = new sqlite3.Database(db_path);
-            // db2.get(`SELECT * FROM Courses WHERE id  = ?`, [id], (err, row) => {
-            //     if (err) {
-            //         db2.close();
-            //         return console.error(err.message);
-            //     } else {
-            //         results.unshift(row);
-            //         console.log(results);
-            //         db2.close();
-            //         return results;
-            //     }
-            //   });
+        async course (root, {id})  {
             try {
-                const fetchresults = await db3.get(`SELECT * FROM Courses WHERE id  = ?`, id)
-                results.unshift(fetchresults);
-                console.log(typeof results, results);
-                return results;
+                const course = await Knex('Courses').where({ id: id });
+                return course   
             } catch(err) {
                 console.log(err);
             }
         },
 
         courseImage: (root, {id}) => {
-            return db.filter(course => {
-                return course.id === id;
-            })[0]
+            return [{}];
        }
     },
     Mutation: {
-        async createCourse(root, {title, author}) {
-            let db3 = new sqlite3.Database(db_path);
-                try {
-                    // const createcourse = await db3.run(`INSERT INTO Courses VALUES(NULL, ${title}, ${author}, ?, ?, ?`);
-                    const createcourse = db3.prepare(`INSERT into Courses VALUES(?, ?, ?, ?, ?, ?);`);
-                    createcourse.run(null, title, author, "test", "test", "test");
-                    return createcourse;
-                } catch(err) {
-                    console.log(err);
-                }
-            db3.close();
+        async createCourse(root, {title, author, description, topic, url}) {
+            try {
+                const createdcourse = await Knex('Courses').insert({ 
+                    id: null,
+                    title: title ? "undefined" : title,
+                    author: author ? "undefined" : author,
+                    description: description ? "undefined" : description,
+                    topic: topic ? "undefined" : topic,
+                    url: url ? "undefined" : url
+                 })
+                 console.log(db_path);
+                 console.log("created row");
+            } catch(err) {
+                console.log(err);
+            } 
         }
     }
 };
@@ -89,12 +68,12 @@ module.exports = resolvers;
 // let sql = `SELECT DISTINCT Name name FROM playlists
 //            ORDER BY name`;
  
-// db.all(sql, [], (err, rows) => {
+// db.all(sql, [], (err, coursess) => {
 //   if (err) {
-//     throw err;
+//     thcourses err;
 //   }
-//   rows.forEach((row) => {
-//     console.log(row.name);
+//   coursess.forEach((courses) => {
+//     console.log(courses.name);
 //   });
 // });
  

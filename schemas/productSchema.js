@@ -16,7 +16,7 @@ const typeDefs = [`
         courseImage(id: Int!): Course
     }
     type Mutation {
-        createCourse (title: String!, author: String!): Course
+        createCourse (title: String!, author: String!, description: String, topic: String, url: String): Course
       }
 `];
 

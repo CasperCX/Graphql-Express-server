@@ -1,8 +1,8 @@
 const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database('./courses.db');
+const db = new sqlite3.Database('./db/courses.sqlite');
 
 //CREATE SQLITE3 TABLE
-  db.run("CREATE TABLE if not exists Courses (id INTEGER, title TEXT, author TEXT, description TEXT, topic TEXT, url TEXT)", function(err)
+  db.run("CREATE TABLE if not exists Courses (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, description TEXT, topic TEXT, url TEXT)", function(err)
     {
       if (err) throw err;
     });
