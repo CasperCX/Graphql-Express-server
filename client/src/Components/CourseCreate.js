@@ -19,10 +19,9 @@ class CourseCreate extends Component {
                 description: this.state.description,
                 topic: this.state.topic,
                 url: this.state.url
-            },
-            refetchQueries: [{ ALL_COURSES }]
-        }).then(() => history.push('/'));
+            }}).then(() => history.push('/'));
     }
+
 
  
     render() {
@@ -60,3 +59,4 @@ class CourseCreate extends Component {
 };
 
 export default graphql(CREATE_COURSE)(CourseCreate);
+

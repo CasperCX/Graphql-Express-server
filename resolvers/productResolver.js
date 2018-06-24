@@ -39,8 +39,8 @@ const resolvers = {
             try {
                 const createdcourse = await Knex('Courses').insert({ 
                     id: null,
-                    title: title ? "undefined" : title,
-                    author: author ? "undefined" : author,
+                    title: title,
+                    author: author,
                     description: description ? "undefined" : description,
                     topic: topic ? "undefined" : topic,
                     url: url ? "undefined" : url

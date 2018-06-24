@@ -3,7 +3,6 @@ import { Query } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import { ALL_COURSES } from '../Queries/courseQueries';
 import Course from './Course';
-// import ClickQuery from './ClickQuery';
 
 
 class Courses extends Component {
@@ -21,8 +20,8 @@ class Courses extends Component {
                                     <Link to={`/course/${course.id}`}> {course.title} </Link>
                                 </li>
                             ));
-                            }}
-                        </Query>
+                        }}
+                    </Query>
                 </div>
                 <div>
                     <Link to="/create">Create Course</Link>
