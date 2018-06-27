@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset'; //ApolloClient
+import { ApolloClient, HttpLink, defaultDataIdFromObject  } from 'apollo-client-preset';
+import { InMemoryCache } from 'apollo-cache-inmemory'; //NEW
 import { ApolloProvider } from 'react-apollo';
 import { Router, Route } from 'react-router-dom';
 import history from './history';
@@ -13,10 +14,22 @@ import config from './config/config';
 
 const httpLink = new HttpLink({ uri: `http://${config.DOMAIN}${config.PORT}/graphql` })
 
+const cache = new InMemoryCache({
+    dataIdFromObject: object => object.id
+  });
+
 const client = new ApolloClient({
-  link: httpLink,
-  cache: new InMemoryCache()
+    link: httpLink,
+    cache,
+    defaultOptions: {
+        watchQuery: {
+          fetchPolicy: 'cache-and-network',
+          errorPolicy: 'all',
+        }
+    }
 })
+
+
 
 
 const Root = () => (
@@ -33,3 +46,19 @@ const Root = () => (
 
 ReactDOM.render(<Root />, document.getElementById('root'));
 registerServiceWorker();
+
+
+//CACHE OPTIONS
+// const defaultOptions = {
+//     watchQuery: {
+//       fetchPolicy: 'cache-and-network',
+//       errorPolicy: 'all',
+//     },
+//     query: {
+//       fetchPolicy: 'cache-and-network',
+//       errorPolicy: 'all',
+//     },
+//     mutate: {
+//       errorPolicy: 'all',
+//     },
+//   };

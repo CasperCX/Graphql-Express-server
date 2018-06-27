@@ -8,7 +8,7 @@ class CourseDetail extends Component {
 
 
     renderresults() {
-        console.log("Course detail props: ", this.props);
+        console.log("Course detail props: ", this.props.data);
         console.log("params id:", this.props.match);
         
     };

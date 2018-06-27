@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
 import { graphql } from 'react-apollo';
 import { Link } from 'react-router-dom';
 import { ALL_COURSES } from '../Queries/courseQueries';
@@ -16,13 +15,13 @@ class Courses extends Component {
                 }}).then(() => this.props.data.refetch())
         };
     
-        renderCourses() {
-            return this.props.data.Courses.map(course => {
-                return (
-                    <li key={course.id}> 
-                        <Link to={`/course/${course.id}`}> {course.title} </Link>
-                        <div onClick={() => this.deleteCourse(course.id)}>DEL</div>
-                    </li>
+    renderCourses() {
+        return this.props.data.Courses.map(course => {
+            return (
+                <li key={course.id}> 
+                    <Link to={`/course/${course.id}`}> {course.title} </Link>
+                    <div onClick={() => this.deleteCourse(course.id)}>DEL</div>
+                </li>
                 )
             })
         };
@@ -39,10 +38,10 @@ class Courses extends Component {
             </div>
         )
     }
-}
+};
 
 export default graphql(DELETE_COURSE) (
-graphql(ALL_COURSES)(Courses)
+    graphql(ALL_COURSES)(Courses)
 );
 
 
