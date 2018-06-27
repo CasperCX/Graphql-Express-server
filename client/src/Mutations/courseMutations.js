@@ -8,3 +8,11 @@ export const CREATE_COURSE = gql`
             }
         }
     `;
+
+export const DELETE_COURSE = gql`
+    mutation deleteCourse($id: Int!) {
+        deleteCourse(id: $id) {
+            id
+            }
+        }
+    `;

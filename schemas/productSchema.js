@@ -11,12 +11,13 @@ const typeDefs = [`
         url: String
     }
     type Query {
-        allCourses: [Course]
+        Courses: [Course]
         course(id: Int!): Course
         courseImage(id: Int!): Course
     }
     type Mutation {
         createCourse (title: String!, author: String!, description: String, topic: String, url: String): Course
+        deleteCourse(id: Int!): Course
       }
 `];
 

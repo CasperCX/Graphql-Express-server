@@ -1,7 +1,7 @@
 const path = require("path");
 const db_path = path.resolve(__dirname, "../db/courses.sqlite");
 
-var Knex = require('knex')({
+const Knex = require('knex')({
     client: 'sqlite3',
     connection: {
       filename: db_path
@@ -12,9 +12,10 @@ var Knex = require('knex')({
 
 const resolvers = {
     Query: {
-        async allCourses () {
+        async Courses () {
             try {
                 const courses = await Knex('Courses');
+                console.log("got:", courses);
                 return courses   
             } catch(err) {
                 console.log(err);
@@ -24,6 +25,7 @@ const resolvers = {
         async course (root, {id})  {
             try {
                 const course = await Knex('Courses').where({ id: id });
+                console.log("got:", course);
                 return course   
             } catch(err) {
                 console.log(err);
@@ -45,11 +47,17 @@ const resolvers = {
                     topic: topic ? "undefined" : topic,
                     url: url ? "undefined" : url
                  })
-                 console.log(db_path);
-                 console.log("created row");
             } catch(err) {
                 console.log(err);
             } 
+        },
+
+        async deleteCourse(root, {id}) {
+            try {
+                const course = await Knex('Courses').where({id}).del();
+            } catch(err) {
+                console.log(err);
+            }
         }
     }
 };
