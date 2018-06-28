@@ -9,6 +9,7 @@ const typeDefs = [`
         description: String
         topic: String
         url: String
+        likes: Int
     }
     type Query {
         Courses: [Course]
@@ -18,6 +19,7 @@ const typeDefs = [`
     type Mutation {
         createCourse (title: String!, author: String!, description: String, topic: String, url: String): Course
         deleteCourse(id: Int!): Course
+        likeCourse(id: Int!): Course
       }
 `];
 

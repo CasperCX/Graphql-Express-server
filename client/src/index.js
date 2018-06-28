@@ -12,6 +12,8 @@ import CourseDetail from './Components/CourseDetail';
 import CourseCreate from './Components/CourseCreate';
 import config from './config/config';
 
+import Test from './Components/Test';
+
 const httpLink = new HttpLink({ uri: `http://${config.DOMAIN}${config.PORT}/graphql` })
 
 const cache = new InMemoryCache({
@@ -25,10 +27,17 @@ const client = new ApolloClient({
         watchQuery: {
           fetchPolicy: 'cache-and-network',
           errorPolicy: 'all',
+        },
+        query: {
+            fetchPolicy: 'cache-and-network',
+            errorPolicy: 'all',
         }
     }
 })
 
+// ENABLE REFETCHING
+// changing the default fetchPolicy to:
+//     "cache-first" to "cache-and-network"
 
 
 
@@ -37,6 +46,7 @@ const Root = () => (
         <Router history={history}>
         <div>
             <Route path="/" component={Courses} exact></Route>
+            <Route path="/test" component={Test} exact></Route>
             <Route path="/create" component={CourseCreate} exact></Route>
             <Route path="/course/:id" component={CourseDetail}></Route>
         </div>

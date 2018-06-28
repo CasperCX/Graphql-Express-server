@@ -45,7 +45,8 @@ const resolvers = {
                     author: author,
                     description: description ? "undefined" : description,
                     topic: topic ? "undefined" : topic,
-                    url: url ? "undefined" : url
+                    url: url ? "undefined" : url,
+                    likes: 0
                  })
             } catch(err) {
                 console.log(err);
@@ -55,6 +56,14 @@ const resolvers = {
         async deleteCourse(root, {id}) {
             try {
                 const course = await Knex('Courses').where({id}).del();
+            } catch(err) {
+                console.log(err);
+            }
+        },
+
+        async likeCourse(root, {id}) {
+            try {
+                const course = await Knex('Courses').increment('likes').where({id})
             } catch(err) {
                 console.log(err);
             }

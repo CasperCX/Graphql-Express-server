@@ -6,6 +6,7 @@ export const ALL_COURSES = gql`
             id
             title
             author
+            likes
             }
         }
     `;

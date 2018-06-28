@@ -17,3 +17,12 @@ export const DELETE_COURSE = gql`
             }
         }
     `;
+
+    export const LIKE_COURSE = gql`
+    mutation likeCourse($id: Int!) {
+        likeCourse(id: $id) {
+            id
+            likes
+            }
+        }
+    `;
