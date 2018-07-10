@@ -1,5 +1,6 @@
 # Graphql-Express-server
 Trying out Graphql
 
-1. npm run seed
-2. npm run start
+1. npm install
+2. npm run seed
+3. npm run start
